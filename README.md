@@ -30,22 +30,22 @@ Before getting started, ensure you have:
 To authenticate for a command line tool like this one, we need to access AWS through access key credentials.
 Head over to your AWS console and go to IAM Users. Click on the yellow "Create User" button on the top right:
 
-![Alt text](image-1.png)
+![Alt text](images/image-1.png)
 
 Make sure you check the box that says "Provide Access to the Management Console". For this tutorial, we'll tick the second box to create an IAM User.
-![Alt text](image-3.png)
+![Alt text](images/image-3.png)
 
 To keep things simple, we won't require a new password for the new user's first sign-in.
-![Alt text](image-4.png)
+![Alt text](images/image-4.png)
 
 As for permissions, let's attach policies directly and look for "AmazonSageMakerFullAccess":
-![Alt text](image-5.png)
+![Alt text](images/image-5.png)
 
 Navigate through the remainder of user creation. Once AWS takes you back to your list of all IAM Users, click on your new user to generate credentials. TODO: create access key, authenticate with aws configure, check on script to see if role is still needed
 
 <br><br>
 
 Head over to your AWS console and go to IAM Roles. Click on the yellow "Create Role" button on the top right:
-![Alt text](image.png)
+![Alt text](images/image.png)
 
 
