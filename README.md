@@ -2,7 +2,7 @@
 
 Welcome to the comprehensive guide on hosting your own inference environment for Hugging Face models using Amazon SageMaker! Whether you're a seasoned developer or just getting started, this tutorial will walk you through the steps to effortlessly deploy and serve your models with confidence. By the end, you'll have a robust setup on AWS SageMaker, empowering you to seamlessly deploy your models for real-world applications.
 
-For our application, we'll be hosting [our own instance of Stable Cascade for text-to-image generation!](https://huggingface.co/stabilityai/stable-cascade)
+For our application, we'll be hosting [our own instance of GPT2 for text generation!](https://huggingface.co/distilbert/distilgpt2)
 
 ## Why Amazon SageMaker? Why Hugging Face?
 
@@ -73,7 +73,7 @@ Select the role you just made and copy your ARN. Export this to an environment v
 
 ## Step 2: Setting up Deployment Steps
 
-Choose the Hugging Face model you'd like to be hosted. For this project, we'll host our own version of [stable cascade](https://huggingface.co/stabilityai/stable-cascade)
+Choose the Hugging Face model you'd like to be hosted. For this project, we'll host our own version of [DistilGPT2](https://huggingface.co/distilbert/distilgpt2)
 
 I've split up this process into two files:
 - host.py
@@ -95,5 +95,16 @@ Now comes the fun part. Run ```python host.py```. This will take a few minutes, 
 ![Alt text](images/image-14.png)
 
 ## Step 4: Query your model
-Open *query.py* and change endpoint_name to your model endpoint's name. To find this, go to your AWS Management Console and head over to SageMaker. On the left side, look for Inference->Endpoints, and copy the name of the endpoint you just created via the host.py script.
+You may need to open *query.py* and change endpoint_name to your model endpoint's name. To find this, go to your AWS Management Console and head over to SageMaker. On the left side, look for Inference->Endpoints, and copy the name of the endpoint you just created via the host.py script.
 ![Alt text](images/image-15.png)
+
+Then, run *query.py* and see your deployed text generation model in action:
+![Alt text](images/image-16.png)
+
+As can be seen, the output is truncated due to model constraints, and it doesn't give an output we'd consider ideal given out input. This is a drawback of using a smaller model. For larger models, we'd either have to increase the EC2 instance size, or look to another inference solution altogether.
+
+## Step 5: IMPORTANT!! Delete your resources!
+Once you're done using your model, you don't want to be billed for the idle resources. Navigate to SageMaker on the AWS Management Console and scroll down the left hand side until you find "inference". The Model, Endpoint, and Endpoint Configuration should all be deleted.
+![Alt text](images/image-17.png)
+
+Fortunately, the python files in this project lead to high reproducibility, and this solution can be spun-up again in minutes.

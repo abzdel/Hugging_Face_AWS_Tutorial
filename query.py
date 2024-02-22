@@ -40,9 +40,11 @@ response = config.invoke_endpoint(
     ContentType='application/json',  # Adjust content type based on your model's requirements
 )
 
+# print the response
+print(response['Body'].read().decode('utf-8'))
+
 # Save the response body as a text file
 print("Saving response to file...")
-response_body = response['Body'].read()
-
-# print the response
-print(response_body.decode('utf-8'))
+# export to a text file
+with open('response.txt', 'w') as f:
+    f.write(response['Body'].read().decode('utf-8'))
