@@ -76,14 +76,14 @@ Select the role you just made and copy your ARN. Export this to an environment v
 
 Choose the Hugging Face model you'd like to be hosted. For this project, we'll host our own version of [DistilGPT2](https://huggingface.co/distilbert/distilgpt2)
 
-I've split up this process into two files:
+I've split up this process into two files. I've made the following changes to the default py deployment file you can find on Hugging Face:
 - host.py
     - changed the top few lines to load in Role from environment variable
     - added some print statements
     - removed model querying - this notebook should only deploy the model to SageMaker
 - query.py
     - this takes command line input that will be passed to our model
-    - we're using a text-to-image model, so this will tell the model what to generate
+    - we're using a text generation model, so this will tell the model what to generate
 
 I recommend using these two python files, but if you'd like to create your own you can find the boilerplate on your model's hugging face page:
 
@@ -92,7 +92,7 @@ On the right side of the page, look for Deploy->Amazon SageMaker
 From here, you can copy and paste the python code into your own file and make changes as you see fit.
 
 ## Step 3: Host your model
-Now comes the fun part. Run ```python host.py```. This will take a few minutes, but this is the step that deploys your model to SageMaker for inference.
+Now comes the fun part. Run ```python host.py``` This will take a few minutes - this is the step that deploys your model to SageMaker for inference.
 ![Alt text](images/image-14.png)
 
 ## Step 4: Query your model
@@ -102,12 +102,10 @@ You may need to open *query.py* and change endpoint_name to your model endpoint'
 Then, run *query.py* and see your deployed text generation model in action:
 ![Alt text](images/image-16.png)
 
-As can be seen, the output is truncated due to model constraints, and it doesn't give an output we'd consider ideal given out input. This is a drawback of using a smaller model. For larger models, we'd either have to increase the EC2 instance size, or look to another inference solution altogether.
+As can be seen, the output is truncated due to model constraints, and it doesn't give an output we'd consider ideal given out input. This is a drawback of using a smaller model. For larger models, we'd either have to increase the instance size, or look to another inference solution altogether.
 
 ## Step 5: IMPORTANT!! Delete your resources!
 Once you're done using your model, you don't want to be billed for the idle resources. Navigate to SageMaker on the AWS Management Console and scroll down the left hand side until you find "inference". The Model, Endpoint, and Endpoint Configuration should all be deleted.
 ![Alt text](images/image-17.png)
 
-Fortunately, the python files in this project lead to high reproducibility, and this solution can be spun-up again in minutes.
-
-This tutorial goes more in depth in the associated GitHub repo. Here, you can also find the accompanying files if you'd like to reproduce the project yourself.
+Fortunately, the python files in this project lend themselves to high reproducibility, and this solution can be spun-up again in minutes.
