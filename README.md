@@ -1,8 +1,8 @@
 # Hosting Hugging Face Models on Amazon SageMaker
 
-Welcome to the comprehensive guide on hosting your own stable inference environment for Hugging Face models using Amazon SageMaker! Whether you're a seasoned developer or just getting started, this tutorial will walk you through the steps to effortlessly deploy and serve your models with confidence. By the end, you'll have a robust setup on AWS SageMaker, empowering you to seamlessly deploy your models for real-world applications.
+Welcome to the comprehensive guide on hosting your own inference environment for Hugging Face models using Amazon SageMaker! Whether you're a seasoned developer or just getting started, this tutorial will walk you through the steps to effortlessly deploy and serve your models with confidence. By the end, you'll have a robust setup on AWS SageMaker, empowering you to seamlessly deploy your models for real-world applications.
 
-For our application, we'll be hosting [our own instance of Stable Diffusion 2 for text-to-image generation!](https://huggingface.co/stabilityai/stable-diffusion-2)
+For our application, we'll be hosting [our own instance of Stable Cascade for text-to-image generation!](https://huggingface.co/stabilityai/stable-cascade)
 
 ## Why Amazon SageMaker? Why Hugging Face?
 
@@ -71,6 +71,29 @@ Select the role you just made and copy your ARN. Export this to an environment v
 ![Alt text](images/image-11.png)
 ![Alt text](images/image-12.png)
 
-## Step 2: Hosting your model
+## Step 2: Setting up Deployment Steps
 
-Choose the Hugging Face model you'd like to be hosted. For this project, we'll host our own version of [stable diffusion](https://huggingface.co/stabilityai/stable-diffusion-2)
+Choose the Hugging Face model you'd like to be hosted. For this project, we'll host our own version of [stable cascade](https://huggingface.co/stabilityai/stable-cascade)
+
+I've split up this process into two files:
+- host.py
+    - changed the top few lines to load in Role from environment variable
+    - added some print statements
+    - removed model querying - this notebook should only deploy the model to SageMaker
+- query.py
+    - this takes command line input that will be passed to our model
+    - we're using a text-to-image model, so this will tell the model what to generate
+
+I recommend using these two python files, but if you'd like to create your own you can find the boilerplate on your model's hugging face page:
+
+On the right side of the page, look for Deploy->Amazon SageMaker
+![Alt text](images/image-13.png)
+From here, you can copy and paste the python code into your own file and make changes as you see fit.
+
+## Step 3: Host your model
+Now comes the fun part. Run ```python host.py```. This will take a few minutes, but this is the step that deploys your model to SageMaker for inference.
+![Alt text](images/image-14.png)
+
+## Step 4: Query your model
+Open *query.py* and change endpoint_name to your model endpoint's name. To find this, go to your AWS Management Console and head over to SageMaker. On the left side, look for Inference->Endpoints, and copy the name of the endpoint you just created via the host.py script.
+![Alt text](images/image-15.png)
