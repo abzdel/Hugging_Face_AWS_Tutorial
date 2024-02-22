@@ -21,7 +21,8 @@ As for Hugging Face - you and I don't have millions of dollars to throw at train
 Before getting started, ensure you have:
 - An AWS Account
 - [A trained Hugging Face model you'd like to host](https://huggingface.co/models)
-- Basic knowledge of AWS services (specifically Lambda + SageMaker) will be helpful but not required
+- Basic knowledge of Python and Linux
+- Basic knowledge of AWS services (specifically SageMaker) will be helpful but not required
 
 
 ## Step 1: Authenticate your Environment
@@ -108,3 +109,5 @@ Once you're done using your model, you don't want to be billed for the idle reso
 ![Alt text](images/image-17.png)
 
 Fortunately, the python files in this project lead to high reproducibility, and this solution can be spun-up again in minutes.
+
+This tutorial goes more in depth in the associated GitHub repo. Here, you can also find the accompanying files if you'd like to reproduce the project yourself.
