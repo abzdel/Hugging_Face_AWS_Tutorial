@@ -10,7 +10,7 @@ sagemaker_runtime_client = boto3.client('sagemaker-runtime')
 
 # Specify the name of the endpoint
 ##### CHANGE YOUR ENDPOINT NAME HERE #####
-endpoint_name = 'huggingface-pytorch-inference-2024-02-22-15-37-30-928'
+endpoint_name = 'huggingface-inference-endpoint-2'
 
 # Get information about the endpoint
 response = sagemaker_client.describe_endpoint(EndpointName=endpoint_name)
@@ -40,6 +40,9 @@ response = config.invoke_endpoint(
     ContentType='application/json',  # Adjust content type based on your model's requirements
 )
 
-# Save the response body as an image file
-with open('output.png', 'wb') as f:
-    f.write(response['Body'].read())
+# Save the response body as a text file
+print("Saving response to file...")
+response_body = response['Body'].read()
+
+# print the response
+print(response_body.decode('utf-8'))

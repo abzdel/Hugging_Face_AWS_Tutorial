@@ -2,13 +2,14 @@ import sagemaker
 import boto3
 from sagemaker.huggingface import HuggingFaceModel
 import os
+import json
 
 role = os.environ['ROLE_ARN']
 
 # Hub Model configuration. https://huggingface.co/models
 hub = {
-	'HF_MODEL_ID':'stabilityai/stable-cascade',
-	'HF_TASK':'text-to-image'
+	'HF_MODEL_ID':'distilbert/distilgpt2',
+	'SM_NUM_GPUS': json.dumps(1)
 }
 
 print("Creating Model")
@@ -25,5 +26,7 @@ print("Deploying to SageMaker")
 # deploy model to SageMaker Inference
 predictor = huggingface_model.deploy(
 	initial_instance_count=1, # number of instances
-	instance_type='ml.m5.xlarge' # ec2 instance type
+	instance_type='ml.m5.xlarge', # ec2 instance type
+	endpoint_name='huggingface-inference-endpoint-2'  # Name of the endpoint
+
 )
