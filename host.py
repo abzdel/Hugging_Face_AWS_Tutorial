@@ -3,10 +3,7 @@ import boto3
 from sagemaker.huggingface import HuggingFaceModel
 import os
 
-role = os.environ['AWS_ROLE_ARN']
-
-# Set AWS credentials using boto3
-boto3.setup_default_session(region_name='us-east-1')
+role = os.environ['ROLE_ARN']
 
 # Hub Model configuration. https://huggingface.co/models
 hub = {
@@ -36,3 +33,4 @@ image_bytes = predictor.predict({
 import io
 from PIL import Image
 image = Image.open(io.BytesIO(image_bytes))
+
